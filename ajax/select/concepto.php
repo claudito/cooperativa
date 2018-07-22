@@ -26,7 +26,7 @@ $id_comerciante = $_SESSION['id_comerciante'];
 <div class="input-group">
   <span class="input-group-addon">Costo del Concepto - S/. <?= round($data['costo'],2) ?> </span>
   <input type="number" name="monto" class="form-control" 
-     step="any"  max="<?= round($data['costo'],2); ?>"  value="<?= round($data['costo'],2); ?>"  required autofocus>
+     step="any"   value="<?= round($data['costo'],2); ?>"  required autofocus>
 <span class="input-group-btn">
 <button class="btn btn-primary" type="submit"><i class="fa fa-plus"></i> Agregar Monto</button>
 </span>

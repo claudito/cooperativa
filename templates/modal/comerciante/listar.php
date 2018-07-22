@@ -26,7 +26,7 @@ $objeto = new Comerciante();
 <th>Fecha Ingreso</th>
 <th>Área</th>
 <th>Tipo</th> 
-<th>Acciones</th>
+<th width="100">Acciones</th>
 </tr>
 </thead>
 <tbody>
@@ -49,8 +49,9 @@ $objeto = new Comerciante();
 <?php endif ?>
 </td> 
 <td>
-<button class="btn btn-primary btn-concepto btn-sm"  data-id="<?= $value['id'] ?>"><i class="fa fa-cube"></i></button> 
-<button class="btn btn-success btn-pago btn-sm"  data-id="<?= $value['id'] ?>"><i class="fa fa-money"></i></button> 
+<button class="btn btn-default btn-puesto btn-xs"  data-id="<?= $value['id'] ?>"><i class="fa fa-home"></i></button> 
+<button class="btn btn-primary btn-concepto btn-xs"  data-id="<?= $value['id'] ?>"><i class="fa fa-cube"></i></button> 
+<button class="btn btn-success btn-pago btn-xs"  data-id="<?= $value['id'] ?>"><i class="fa fa-money"></i></button> 
 </td>
 </tr>
 <?php endforeach ?>
@@ -93,6 +94,23 @@ $('#modal-pago').modal('show');
 
 });
 
+
+//puesto
+$('.btn-puesto').click(function (){
+
+var id         = $(this).data('id');
+var parametros = {"id":id};
+var url        = "../templates/modal/comerciante/puesto.php";
+$.post(url,parametros,function (data){
+
+$('#form-puesto').html(data);
+
+});
+
+$('#modal-puesto').modal('show');
+
+});
+
 </script>
 
 
@@ -119,6 +137,16 @@ $('#modal-pago').modal('show');
 	</div>
 </div>
 
+<!-- Modal Pago -->
+<div class="modal fade" id="modal-puesto">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		 
+		<div id="form-puesto"></div>
+
+		</div>
+	</div>
+</div>
 
 
 <script>

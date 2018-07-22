@@ -50,6 +50,48 @@ echo "Error: ".$e->getMessage();
 }
 
 
+function lista()
+{
+
+try {
+
+$conexion  = $this->get_conexion();
+$query     = "
+SELECT 
+p.id,
+c.descripcion,
+c.costo,
+c.porcentaje,
+c.tipo,
+c.estado,
+p.fecha,
+p.pago
+FROM concepto c
+INNER JOIN
+(
+SELECT id,id_concepto,pago,fecha,fecha_creacion,fecha_update FROM concepto_pago  WHERE
+ id_comerciante=:id_comerciante AND
+DATE_FORMAT(fecha,'%Y-%m') =:fecha AND 
+ id_concepto=:id_concepto 
+)p ON c.id=p.id_concepto ORDER BY fecha";
+$statement = $conexion->prepare($query);
+$statement->bindParam(':id_comerciante',$this->id_comerciante);
+$statement->bindParam(':fecha',$this->fecha);
+$statement->bindParam(':id_concepto',$this->id_concepto);
+$statement->execute();
+$result    = $statement->fetchAll(PDO::FETCH_ASSOC);
+return $result;
+	
+} catch (Exception $e) {
+	
+echo "Error: ".$e->getMessage();
+
+}
+
+}
+
+
+
 
 function lista_mes()
 {

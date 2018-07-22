@@ -95,7 +95,7 @@ function lista()
 try {
 
 $conexion = $this->get_conexion();
-$query    = "SELECT * FROM  puesto";
+$query    = "SELECT * FROM  puesto ORDER BY codigo";
 $statement= $conexion->prepare($query);
 $statement->execute();
 $result   = $statement->fetchAll(PDO::FETCH_ASSOC);
