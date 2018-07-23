@@ -6,8 +6,9 @@ $session->validity();
 $id 			      = $_POST['id'];
 $comerciante          = new Comerciante();
 $dato                 = $comerciante->consulta($id);
-
 $puesto               = new Puesto();
+$comerciantePuesto    = new ComerciantePuesto($id);
+$id_puesto            = $comerciantePuesto->consulta()['id_puesto'];
 
  ?>
 <div class="modal-header">
@@ -27,9 +28,10 @@ $puesto               = new Puesto();
 <?php foreach ($puesto->lista() as $key => $value): ?>
 <div class="checkbox">
  <label>
-    <input type="checkbox"  class="puesto" 
+    <input type="radio" name="puesto"   class="puesto" 
     data-puesto="<?= $value['id'] ?>"
     data-comerciante="<?= $id ?>"
+    <?=  ($value['id']==$id_puesto) ? "checked" : "" ; ?>
     >
     <?= $value['codigo'].' - '.$value['descripcion'].' - '.$value['estado'].' - '.$value['tipo'] ?>
   </label>
@@ -61,22 +63,17 @@ $(".puesto").on( 'change', function() {
      var comerciante = $(this).data('comerciante');
 
     if( $(this).is(':checked') ) {
-        // Hacer algo si el checkbox ha sido seleccionado
-        //alert("El checkbox con valor " + $(this).val() + " ha sido seleccionado");
-       	alert(puesto);
+    
+     var parametros = {"puesto":puesto,"comerciante":comerciante};
+     var url        = "../controlador/comerciante/puesto.php";
 
+     $.post(url,parametros,function(data){
+
+     $('#msj_puesto').html(data);
+
+     });
 
     }
-    else {
-        // Hacer algo si el checkbox ha sido deseleccionado
-        alert("El checkbox con valor " + $(this).val() + " ha sido deseleccionado");
-
-
-    }
-
 
 });
-
-
-
 </script>

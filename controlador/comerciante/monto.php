@@ -6,8 +6,9 @@ $comerciante  = $_POST['id_comerciante'];
 $concepto     = $_POST['id_concepto'];
 $monto        = $_POST['monto'];
 $fecha        = $_POST['fecha'];
+$puesto       = $_POST['id_puesto'];
 
-$conceptoPago = new ConceptoPago($comerciante,$concepto,$monto,$fecha);
+$conceptoPago = new ConceptoPago($comerciante,$concepto,$monto,$fecha,$puesto);
 $data         = $conceptoPago->agregar();
 
 if ($data=='ok') 

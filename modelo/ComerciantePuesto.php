@@ -43,7 +43,7 @@ else
 {
 
 $query      = "INSERT INTO comerciante_puesto(id_comerciante,id_puesto)
-VALUES(:id_comerciante,:id_puesto,:fecha_asociacion)";
+VALUES(:id_comerciante,:id_puesto)";
 $statement  = $conexion->prepare($query);
 $statement->bindParam(':id_comerciante',$this->id_comerciante);
 $statement->bindParam(':id_puesto',$this->id_puesto);
@@ -63,6 +63,29 @@ echo "Error: ".$e->getMessage();
 }
 
 
+
+function eliminar()
+{
+
+try {
+
+$conexion   = $this->get_conexion();
+$query      = "DELETE FROM comerciante_puesto WHERE id_comerciante=:id_comerciante";
+$statement  = $conexion->prepare($query);
+$statement->bindParam(':id_comerciante',$this->id_comerciante);
+$statement->execute();
+return "ok";
+
+} catch (Exception $e) {
+
+echo "Error: ".$e->getMessage();
+	
+}
+
+
+}
+
+
 function lista()
 {
 
@@ -74,12 +97,13 @@ c.id,
 c.id_comerciante,
 c.id_puesto,
 c.fecha_asociacion,
-c.estado,
+-- c.estado,
 c.fecha_creacion,
 p.id id_puesto,
 p.codigo,
 p.descripcion,
-p.tipo
+p.tipo,
+p.estado
 FROM comerciante_puesto c
 INNER JOIN puesto p ON c.id_puesto=p.id WHERE c.id_comerciante=:id_comerciante";
 $statement  = $conexion->prepare($query);
@@ -109,7 +133,7 @@ c.id,
 c.id_comerciante,
 c.id_puesto,
 c.fecha_asociacion,
-c.estado,
+p.estado,
 c.fecha_creacion,
 p.id id_puesto,
 p.codigo,

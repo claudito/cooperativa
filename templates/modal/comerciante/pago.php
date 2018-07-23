@@ -4,14 +4,24 @@ include'../../../autoload.php';
 $session =  new Session();
 $session->validity();
 unset($_SESSION['session_fecha']);
-$id 			      = $_POST['id'];
-$conceptoComerciante  = new ConceptoComerciante($id);
-$comerciante          = new Comerciante();
-$dato                 = $comerciante->consulta($id);
+$id 			            = $_POST['id'];
+$conceptoComerciante        = new ConceptoComerciante($id);
+$comerciante                = new Comerciante();
+$dato                       = $comerciante->consulta($id);
 $_SESSION['id_comerciante'] = $id;
+
+$comerciantePuesto          =  new ComerciantePuesto($id);
+
+$dato_puesto                =  $comerciantePuesto->consulta();
+$_SESSION['id_puesto']      =  $dato_puesto['id_puesto'];
 
  ?>
 
+<?php if ($dato_puesto['id_puesto']==false): ?>
+<div class="modal-body">
+<p class="alert alert-warning">Necesita Asociar un puesto.</p>
+</div>
+<?php else: ?>
 <script>
 $(document).ready(function() {
 // Parametros para el combo
@@ -29,7 +39,14 @@ $("#data-concepto").html(data);
 
 <div class="modal-header">
 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-<h4 class="modal-title"><i class="fa fa-user"></i> <?= $dato['nombres'].' '.$dato['apellidos']; ?></h4>
+<h4 class="modal-title">
+
+<i class="fa fa-user"></i> <?= $dato['nombres'].' '.$dato['apellidos']; ?>
+
+<i class="fa fa-home"></i> 
+<?= $dato_puesto['codigo'].' - '.$dato_puesto['descripcion'].' - '.$dato_puesto['estado'].' - '.$dato_puesto['tipo']; ?>
+
+</h4>
 </div>
 <div class="modal-body">
 
@@ -81,3 +98,8 @@ $( "#idfecha" ).blur(function() {
 
 });
 </script>
+
+<?php endif ?>
+
+
+

@@ -7,16 +7,18 @@ protected $id_comerciante;
 protected $id_concepto;
 protected $pago;
 protected $fecha;
+protected $id_puesto;
 
 
-function __construct($id_comerciante='',$id_concepto='',$pago='',$fecha='')
+function __construct($id_comerciante='',$id_concepto='',$pago='',$fecha='',$id_puesto='')
 {
 
 $this->id_comerciante   =  $id_comerciante;
 $this->id_concepto   	=  $id_concepto;
 $this->pago   		 	=  $pago;
 $this->fecha   			=  $fecha;
-
+$this->id_puesto        =  $id_puesto;
+ 
 }
 
 
@@ -26,17 +28,19 @@ function agregar()
 try {
 
 $conexion  = $this->get_conexion();
-$query     = "INSERT INTO concepto_pago(id_comerciante,id_concepto,pago,fecha)VALUES( 
+$query     = "INSERT INTO concepto_pago(id_comerciante,id_concepto,pago,fecha,id_puesto)VALUES( 
     :id_comerciante,
     :id_concepto,
     :pago,
-    :fecha
+    :fecha,
+    :id_puesto
     )";
 $statement = $conexion->prepare($query);
 $statement->bindParam(':id_comerciante',$this->id_comerciante);
 $statement->bindParam(':id_concepto',$this->id_concepto);
 $statement->bindParam(':pago',$this->pago);
 $statement->bindParam(':fecha',$this->fecha);
+$statement->bindParam(':id_puesto',$this->id_puesto);
 $statement->execute();
 return "ok";
 
