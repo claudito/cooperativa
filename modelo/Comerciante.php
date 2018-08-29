@@ -72,7 +72,7 @@ WHERE c.id=:id
 $statement  = $conexion->prepare($query);
 $statement->bindParam(':id',$id);
 $statement->execute();
-$result     = $statement->fetch();
+$result     = $statement->fetch(PDO::FETCH_ASSOC);
 return $result;
 
 

@@ -33,7 +33,7 @@ $objeto = new Comerciante();
 <?php foreach ($objeto->lista() as $key => $value): ?>
 <tr>
 <td><?= $value['id'] ?></td>
-<td><?= $value['nombres'].' '.$value['apellidos'] ?></td>
+<td><a href="#" class="btn-edit" data-id="<?= $value['id'] ?>"><?= $value['nombres'].' '.$value['apellidos'] ?></a></td>
 <td><?= $value['dni'] ?></td>
 <td><?= $value['direccion'] ?></td>
 <td><?= $value['telefono'] ?></td>
@@ -111,6 +111,24 @@ $('#modal-puesto').modal('show');
 
 });
 
+
+//Actualizar
+$('.btn-edit').on('click',function (){
+
+
+var id         = $(this).data('id');
+var parametros = {"id":id};
+var url        = "../templates/modal/comerciante/actualizar.php";
+$.post(url,parametros,function (data){
+
+$('#form-edit').html(data);
+
+});
+
+$('#modal-actualizar').modal('show');
+
+
+});
 </script>
 
 
@@ -147,6 +165,18 @@ $('#modal-puesto').modal('show');
 		</div>
 	</div>
 </div>
+
+<!-- Modal Pago -->
+<div class="modal fade" id="modal-actualizar">
+	<div class="modal-dialog">
+		<div class="modal-content">
+		 
+		<div id="form-edit"></div>
+
+		</div>
+	</div>
+</div>
+
 
 
 <script>
